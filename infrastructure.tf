@@ -102,7 +102,7 @@ variable "public_cidr" {
 }
 
 variable "openshift_image_source_uri" {
-  default     = " "
+  default     = ""
   type        = string
   description = "The OCI Object Storage URL for the OpenShift image. Before provisioning resources through this Resource Manager stack, users should upload the OpenShift image to OCI Object Storage, create a pre-authenticated requests (PAR) uri, and paste the uri to this block. For more detail regarding Object storage and PAR, please visit https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/objectstorageoverview.htm and https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/usingpreauthenticatedrequests.htm ."
 }
@@ -652,7 +652,8 @@ data "oci_dns_resolver" "dns_resolver" {
 }
 
 resource oci_core_instance_configuration master_node_config {
-  count          = local.create_openshift_instance_pools ? 1 : 0
+#  count          = local.create_openshift_instance_pools ? 1 : 0
+  count          = var.create_openshift_instance_pools ? 1 : 0
   compartment_id = var.compartment_ocid
   display_name   = "${var.cluster_name}-master"
   instance_details {
@@ -687,7 +688,8 @@ resource oci_core_instance_configuration master_node_config {
 }
 
 resource oci_core_instance_pool master_nodes {
-  count                     = local.create_openshift_instance_pools ? 1 : 0
+#  count                    = local.create_openshift_instance_pools ? 1 : 0
+  count                     = var.create_openshift_instance_pools ? 1 : 0
   compartment_id            = var.compartment_ocid
   display_name              = "${var.cluster_name}-master"
   instance_configuration_id = oci_core_instance_configuration.master_node_config[0].id
@@ -723,7 +725,8 @@ resource oci_core_instance_pool master_nodes {
 }
 
 resource oci_core_instance_configuration worker_node_config {
-  count          = local.create_openshift_instance_pools ? 1 : 0
+#  count          = local.create_openshift_instance_pools ? 1 : 0
+  count          = var.create_openshift_instance_pools ? 1 : 0
   compartment_id = var.compartment_ocid
   display_name   = "${var.cluster_name}-worker"
   instance_details {
@@ -758,7 +761,8 @@ resource oci_core_instance_configuration worker_node_config {
 }
 
 resource oci_core_instance_pool worker_nodes {
-  count                     = local.create_openshift_instance_pools ? 1 : 0
+#  count                    = local.create_openshift_instance_pools ? 1 : 0
+  count                     = var.create_openshift_instance_pools ? 1 : 0
   compartment_id            = var.compartment_ocid
   display_name              = "${var.cluster_name}-worker"
   instance_configuration_id = oci_core_instance_configuration.worker_node_config[0].id
