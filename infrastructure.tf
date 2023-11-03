@@ -1,8 +1,4 @@
-## Default region
-variable home_region { 
-    type = string
-    description = "The region identifier of the home region where the tenancy's IAM and compartment resources are defined. For more detail regarding region identifiers, please visit https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm . "
-}
+## Openshift on OCI Variables
 variable zone_dns {
     type        = string
     description = "The name of cluster's DNS zone. This name must be the same as what was specified during OpenShift ISO creation."
@@ -78,6 +74,12 @@ variable compartment_ocid {
     description = "The ocid of the compartment where you wish to create the OpenShift cluster."
 }
 
+## Default region
+variable region { 
+    type = string
+    description = "The region identifier of the home region where the tenancy's IAM and compartment resources are defined. For more detail regarding region identifiers, please visit https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm . "
+}
+
 ## Openshift cluster name
 variable cluster_name {
     type        = string
@@ -104,7 +106,7 @@ variable "openshift_image_source_uri" {
 
 #Provider
 provider oci {
-	region = var.home_region
+	region = var.region
 }
 
 locals {
