@@ -111,10 +111,16 @@ provider oci {
 	region = var.region
 }
 
+variable "create_openshift_instance_pools" {
+    default     = false
+    type        = bool
+    description = "Flag to create Master and Worker instance pools for OpenShift"
+}
+
 locals {
   all_protocols = "all"
   anywhere      = "0.0.0.0/0"
-  create_openshift_instance_pools = true
+##   create_openshift_instance_pools = true
 }
 
 data oci_identity_availability_domain availability_domain {
