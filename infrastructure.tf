@@ -163,7 +163,8 @@ locals {
 }
 
 resource "oci_core_image" "openshift_image" {
-  count          = local.create_openshift_instance_pools ? 1 : 0
+#  count          = local.create_openshift_instance_pools ? 1 : 0
+  count          = var.create_openshift_instance_pools ? 1 : 0
   compartment_id = var.compartment_ocid
   display_name   = var.cluster_name
   launch_mode    = "PARAVIRTUALIZED"
@@ -177,21 +178,24 @@ resource "oci_core_image" "openshift_image" {
 }
 
 resource "oci_core_shape_management" "imaging_master_shape" {
-  count          = local.create_openshift_instance_pools ? 1 : 0
+#  count          = local.create_openshift_instance_pools ? 1 : 0
+  count          = var.create_openshift_instance_pools ? 1 : 0
   compartment_id = var.compartment_ocid
   image_id       = oci_core_image.openshift_image[0].id
   shape_name     = var.master_shape
 }
 
 resource "oci_core_shape_management" "imaging_worker_shape" {
-  count          = local.create_openshift_instance_pools ? 1 : 0
+#  count          = local.create_openshift_instance_pools ? 1 : 0
+  count          = var.create_openshift_instance_pools ? 1 : 0
   compartment_id = var.compartment_ocid
   image_id       = oci_core_image.openshift_image[0].id
   shape_name     = var.worker_shape
 }
 
 resource "oci_core_compute_image_capability_schema" "openshift_image_capability_schema" {
-  count                                               = local.create_openshift_instance_pools ? 1 : 0
+#  count         				      = local.create_openshift_instance_pools ? 1 : 0
+  count          				      = var.create_openshift_instance_pools ? 1 : 0
   compartment_id                                      = var.compartment_ocid
   compute_global_image_capability_schema_version_name = local.global_image_capability_schemas[0].current_version_name
   image_id                                            = oci_core_image.openshift_image[0].id
