@@ -1,5 +1,6 @@
 ## Openshift on OCI Variables
 variable zone_dns {
+    default     = "orkoci.local"
     type        = string
     description = "The name of cluster's DNS zone. This name must be the same as what was specified during OpenShift ISO creation."
 }
@@ -82,6 +83,7 @@ variable region {
 
 ## Openshift cluster name
 variable cluster_name {
+    default     = "ocp4"
     type        = string
     description = "The name of your OpenShift cluster. It should be the same as what was specified when creating the OpenShift ISO and it should be DNS compatible."
 }
